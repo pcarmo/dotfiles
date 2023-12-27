@@ -14,11 +14,11 @@ function setup_tmux(){
         fi
     fi
 
-    source="`pwd`/$filename"
+    source="`pwd`/tmux/$filename"
 
     echo "creating file $target"
     echo "and linking to $source"
-    ln -s $source $target
+    cp $source $target
 }
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
