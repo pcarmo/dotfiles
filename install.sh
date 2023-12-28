@@ -1,9 +1,40 @@
 #!/bin/bash
+CONFIG_FOLDER="$HOME/.config"
 
+# Copies nvim folder to nvim config folder
+# arg $1 is nvim environment folder ('macos' for MacOS)
+# arg $2 indicates if existing folder should be removed before copying or not.
+#   If not forcing, updates will not be applied if folder already exists.
 function setup_nvim(){
-
+    echo "Setting up nvim..."    
+    nvim_folder="`pwd`/nvim/$1"
+    if test -e $nvim_folder; then
+        echo "Found $nvim_folder"
+        nvim_config_folder="$CONFIG_FOLDER/nvim"
+        
+        if test -e $nvim_config_folder; then
+            echo "Found $nvim_config_folder"
+            if [[ "$2" == "force" ]]; then
+                echo "Forcing update."
+                rm -r $nvim_config_folder 
+                cp -r $nvim_folder $nvim_config_folder
+            else
+                echo "Failed to update $nvim_config_folder, it already exists. If you really wish to update, force it."
+                return
+            fi
+        else
+            echo "Failed to find $nvim_config_folder"
+        fi
+        echo "Copying nvim config from: $nvim_folder to: $nvim_config_folder"
+        cp -r $nvim_folder $nvim_config_folder
+    else
+        echo "Failed to find $nvim_folder" 
+    fi
 }
 
+# Copies tmux conf file to the home folder 
+# arg $1 indicates if existing folder should be removed before copying or not.
+#   If not forcing, updates will not be applied if folder already exists.
 function setup_tmux(){
     echo "Setting up tmux..."
     filename='.tmux.conf'
@@ -34,7 +65,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "Detected MacOS"
     setup_tmux "force"
-    setup_nvim
+    setup_nvim "macos" "force"
 else
     echo "Using unsupported OS"
 fi
