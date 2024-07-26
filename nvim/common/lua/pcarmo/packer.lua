@@ -44,16 +44,16 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
-    use('kassio/neoterm')
     use('nvim-tree/nvim-tree.lua')
     use("nvim-tree/nvim-web-devicons")
     use("lukas-reineke/lsp-format.nvim")
     use("jiangmiao/auto-pairs")
-    use("s1n7ax/nvim-terminal")
-    use('mfussenegger/nvim-dap')
-    use('rcarriga/nvim-dap-ui')
-    use("ldelossa/nvim-dap-projects")
-    use('leoluz/nvim-dap-go')
     use("romgrk/barbar.nvim")
-    use("numToStr/Comment.nvim")
+    use {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end
+    }
+    use("lukas-reineke/indent-blankline.nvim")
 end)
