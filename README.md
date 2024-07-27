@@ -1,6 +1,9 @@
 # Installation
 
-Just run:
-`$ source install.sh`
+We use stow to manage the  dotfiles i this repository.
 
-NOTE: this will one setup the dotfiles for the particular applications. For tmux, `<prefix>+I` combinaton is still going to be required to install the tmu plugins.
+Clone this repository in the home folder and run
+
+> stow .
+
+This command will place symlinks from this repo in the parent folder
